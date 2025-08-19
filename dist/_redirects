@@ -1,0 +1,2 @@
+/_astro/*   /_astro/:splat   200
+/assets/*   /assets/:splat   200

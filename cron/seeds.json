@@ -1,0 +1,27 @@
+{
+  "language": "vi",
+  "audience": "người dùng phổ thông",
+  "tone": "thân thiện",
+  "tags": [
+    "review",
+    "affiliate"
+  ],
+  "items": [
+    {
+      "link": "https://example.com/product-1?aff=123",
+      "primaryKeyword": "tai nghe bluetooth giá rẻ"
+    },
+    {
+      "link": "https://example.com/product-2?aff=123",
+      "primaryKeyword": "robot hút bụi thông minh"
+    },
+    {
+      "link": "https://example.com/product-3?aff=123",
+      "primaryKeyword": "bàn phím cơ cho lập trình viên"
+    },
+    {
+      "link": "https://example.com/product-4?aff=123",
+      "primaryKeyword": "màn hình 27 inch 2K"
+    }
+  ]
+}

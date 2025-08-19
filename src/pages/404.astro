@@ -1,0 +1,16 @@
+---
+import Analytics from "../components/Analytics.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout pageTitle="Page Not Found">
+  <Analytics />
+
+  <section class="container section" style="min-height:60vh;display:flex;align-items:center;justify-content:center;text-align:center">
+    <div>
+      <h1 style="font-size:2.25rem;margin-bottom:0.5rem">404</h1>
+      <p class="small" style="margin-bottom:1rem">Sorry, we couldn’t find that page.</p>
+      <a class="btn" href="/">Go Home</a>
+    </div>
+  </section>
+</BaseLayout>

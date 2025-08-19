@@ -1,0 +1,146 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const pageTitle = 'Admin - Tạo bài review tự động';
+---
+<html class="dark">
+<BaseLayout title={pageTitle}>
+  <section class="mx-auto max-w-3xl p-6 text-gray-100 bg-gray-950 rounded-2xl shadow-xl">
+    <h1 class="text-3xl font-extrabold mb-6 tracking-tight">Tạo bài review mới (AI)</h1>
+    <form id="postForm" class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium mb-1 text-gray-300">Link affiliate / sản phẩm</label>
+        <input type="url" id="link" required placeholder="https://..." class="w-full p-3 border rounded-lg bg-gray-900 border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-600"/>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-medium mb-1 text-gray-300">Từ khóa chính</label>
+          <input id="primaryKeyword" placeholder="ví dụ: máy lọc không khí mini" class="w-full p-3 border rounded-lg bg-gray-900 border-gray-700"/>
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1 text-gray-300">Ngôn ngữ</label>
+          <select id="language" class="w-full p-3 border rounded-lg bg-gray-900 border-gray-700">
+            <option value="vi">Tiếng Việt</option>
+            <option value="en">English</option>
+          </select>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-medium mb-1 text-gray-300">Đối tượng</label>
+          <input id="audience" placeholder="người dùng phổ thông" class="w-full p-3 border rounded-lg bg-gray-900 border-gray-700"/>
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1 text-gray-300">Giọng điệu</label>
+          <input id="tone" placeholder="thân thiện" class="w-full p-3 border rounded-lg bg-gray-900 border-gray-700"/>
+        </div>
+      </div>
+      <div>
+        <label class="block text-sm font-medium mb-1 text-gray-300">Tags (phân tách bởi dấu phẩy)</label>
+        <input id="tags" placeholder="review, affiliate" class="w-full p-3 border rounded-lg bg-gray-900 border-gray-700"/>
+      </div>
+
+      <div class="flex items-center gap-3 pt-2">
+        <input id="publishNow" type="checkbox" class="h-4 w-4 rounded border-gray-700 bg-gray-900"/>
+        <label for="publishNow" class="text-sm text-gray-300">Đăng ngay (bỏ chọn để lưu <i>nháp</i>)</label>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">Tạo bài viết</button>
+        <button id="createDraft" type="button" class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg">Tạo NHÁP</button>
+      </div>
+
+      <div id="status" class="mt-4 text-sm text-gray-300"></div>
+      <div id="preview" class="mt-6 hidden">
+        <h2 class="text-xl font-semibold mb-2">Ảnh xem trước</h2>
+        <img id="previewImg" alt="preview" class="rounded-lg border border-gray-700"/>
+      </div>
+    </form>
+
+    <hr class="my-8 border-gray-800"/>
+
+    <div class="flex items-center gap-3">
+      <button id="runCronPublish" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg">Chạy cron (đăng ngay 1 bài)</button>
+      <button id="runCronDraft" class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg">Chạy cron (tạo 1 nháp)</button>
+    </div>
+  </section>
+
+  <script>
+    const form = document.getElementById('postForm');
+    const statusEl = document.getElementById('status');
+    const preview = document.getElementById('preview');
+    const previewImg = document.getElementById('previewImg');
+    const runCronPublish = document.getElementById('runCronPublish');
+    const runCronDraft = document.getElementById('runCronDraft');
+
+    async function callAPI(payload) {
+      try {
+        const res = await fetch('/api/generate-post', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (data.success) {
+          statusEl.textContent = `✅ Tạo thành công: ${data.file}`;
+          if (data.image) {
+            previewImg.src = data.image;
+            preview.classList.remove('hidden');
+          }
+        } else {
+          statusEl.textContent = '❌ Lỗi: ' + data.error;
+        }
+      } catch (err) {
+        statusEl.textContent = '❌ Lỗi mạng hoặc server.';
+      }
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      statusEl.textContent = '⏳ Đang tạo bài viết...';
+      preview.classList.add('hidden');
+
+      const payload = {
+        link: (document.getElementById('link')).value,
+        primaryKeyword: (document.getElementById('primaryKeyword')).value,
+        language: (document.getElementById('language')).value,
+        audience: (document.getElementById('audience')).value,
+        tone: (document.getElementById('tone')).value,
+        tags: (document.getElementById('tags')).value.split(',').map(s => s.trim()).filter(Boolean),
+        publishMode: (document.getElementById('publishNow')).checked ? 'publish' : 'draft'
+      };
+      await callAPI(payload);
+    });
+
+    document.getElementById('createDraft').addEventListener('click', async () => {
+      statusEl.textContent = '⏳ Đang tạo NHÁP...';
+      const payload = {
+        link: (document.getElementById('link')).value,
+        primaryKeyword: (document.getElementById('primaryKeyword')).value,
+        language: (document.getElementById('language')).value,
+        audience: (document.getElementById('audience')).value,
+        tone: (document.getElementById('tone')).value,
+        tags: (document.getElementById('tags')).value.split(',').map(s => s.trim()).filter(Boolean),
+        publishMode: 'draft'
+      };
+      await callAPI(payload);
+    });
+
+    runCronPublish.addEventListener('click', async () => {
+      try {
+        await fetch('/api/run-cron?mode=publish');
+        statusEl.textContent = '✅ Đã kích hoạt cron: tạo 1 bài đăng ngay.';
+      } catch {
+        statusEl.textContent = '❌ Không chạy được cron.';
+      }
+    });
+    runCronDraft.addEventListener('click', async () => {
+      try {
+        await fetch('/api/run-cron?mode=draft');
+        statusEl.textContent = '✅ Đã kích hoạt cron: tạo 1 bài NHÁP.';
+      } catch {
+        statusEl.textContent = '❌ Không chạy được cron.';
+      }
+    });
+  </script>
+</BaseLayout>
+</html>

@@ -1,0 +1,76 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const pageTitle = "Product";
+---
+<BaseLayout pageTitle={pageTitle}>
+
+<!doctype html><html lang="en"><head>
+<link rel="preload" as="style" href="/assets/css/style.css">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Product – CICIHERE</title>
+<link rel="stylesheet" href="/assets/css/style.css"></head><body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a class="brand" href="/" data-active>CICIHERE</a>
+    <nav class="menu">
+      <a href="/" data-active>Home</a>
+      <a href="/categories/" data-active>Categories</a>
+      <a href="/brands/" data-active>Brands</a>
+      <a href="/article/" data-active>Blog</a>
+      <a href="/contact/" data-active>Contact</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container page-hero">
+  <div class="breadcrumbs">Home / Categories / Product</div>
+  <h2>Zenbrew Mini Coffee Maker</h2>
+</div>
+<section class="container section">
+  <div class="grid" style="grid-template-columns:1.1fr 1fr">
+    <div class="card" style="height:380px;display:grid;place-items:center">
+      <img loading="lazy" src="/assets/img/coffee-maker.svg" alt="Coffee maker" style="width:280px" decoding="async">
+    </div>
+    <div class="card">
+      <div class="badge">Best Value</div>
+      <p class="small">By CICIHERE Reviews • Updated Mar 2025</p>
+      <p>Compact, fast, and easy to clean. Perfect for apartments and small desks.</p>
+      <ul>
+        <li>Brews in 3 minutes</li>
+        <li>Auto shut-off</li>
+        <li>Detachable water tank</li>
+      </ul>
+      <div style="display:flex;gap:12px;align-items:center;margin-top:10px">
+        <a class="btn">Buy on Amazon</a>
+        <span class="small">Affiliate link</span>
+      </div>
+    </div>
+  </div>
+  <div class="pros-cons" style="margin-top:20px">
+    <div class="pros"><strong>Pros</strong><ul><li>Great taste</li><li>Small footprint</li><li>Affordable filters</li></ul></div>
+    <div class="cons"><strong>Cons</strong><ul><li>No built-in grinder</li><li>Single-serve only</li></ul></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container footer-cols">
+    <div>
+      <div class="brand">CICIHERE</div>
+      <p class="small">A compact, clean affiliate starter. UI only – no backend. Replace images & copy as you go.</p>
+    </div>
+    <div>
+      <strong>Links</strong><br>
+      <div class="small"><a href="/">Home</a><br><a href="/categories/">Categories</a><br><a href="/article/">Blog</a><br><a href="/contact/">Contact</a></div>
+    </div>
+    <div>
+      <strong>Follow Us</strong><br>
+      <div class="small">   </div>
+    </div>
+  </div>
+</footer>
+<script src="/assets/js/main.js" defer></script>
+
+</body></html>
+
+</BaseLayout>

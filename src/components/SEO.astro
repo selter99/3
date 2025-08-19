@@ -1,0 +1,19 @@
+---
+const { title, description, image, url } = Astro.props;
+const siteTitle = title || "Default Site Title";
+const siteDescription = description || "Default description for the website.";
+const siteImage = image || "/placeholder.png";
+const siteUrl = url || "https://example.com";
+---
+<head>
+  <title>{siteTitle}</title>
+  <meta name="description" content={siteDescription} />
+  <meta property="og:title" content={siteTitle} />
+  <meta property="og:description" content={siteDescription} />
+  <meta property="og:image" content={siteImage} />
+  <meta property="og:url" content={siteUrl} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={siteTitle} />
+  <meta name="twitter:description" content={siteDescription} />
+  <meta name="twitter:image" content={siteImage} />
+</head>

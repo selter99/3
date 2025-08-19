@@ -1,0 +1,102 @@
+---
+import SEO from "../components/SEO.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+const pageTitle = "Index";
+---
+
+<BaseLayout pageTitle={pageTitle}>
+  <SEO 
+    title="Home Page" 
+    description="Welcome to our Astro website" 
+    image="/placeholder.png" 
+    url="https://example.com" 
+  />
+
+  <link rel="preload" as="style" href="assets/css/style.css">
+  <title>CICIHERE – Find the Best Products and Reviews</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+
+  <Header />
+
+  <section class="container hero">
+    <div>
+      <h1>Find the Best<br/>Products and<br/>Reviews</h1>
+      <p>Search honest reviews and buying guides to make confident decisions.</p>
+      <div class="search">
+        <input class="input" placeholder="Search for products..." />
+        <button class="btn">Search</button>
+      </div>
+    </div>
+    <div class="hero-media">
+      <div class="phone"></div>
+      <div class="cup"></div>
+    </div>
+  </section>
+
+  <section class="container section">
+    <div class="grid cat-grid">
+      <a class="cat" href="/categories/">
+        <div class="icon"><svg viewBox="0 0 64 64" width="28" height="28" fill="currentColor" stroke="currentColor"><rect x='8' y='12' rx='3' ry='3' width='48' height='34'/><rect x='25' y='48' width='14' height='6'/></svg></div>
+        <div><strong>Electronics</strong><div class="small">Phones, audio, laptops</div></div>
+      </a>
+      <a class="cat" href="/categories/">
+        <div class="icon"><svg viewBox="0 0 64 64" width="28" height="28" fill="currentColor" stroke="currentColor"><rect x='10' y='26' width='44' height='24' rx='4'/><path d='M8 28 L32 12 L56 28' fill='none' stroke-width='4'/></svg></div>
+        <div><strong>Home & Kitchen</strong><div class="small">Coffee, vacuums</div></div>
+      </a>
+      <a class="cat" href="/categories/">
+        <div class="icon"><svg viewBox="0 0 64 64" width="28" height="28" fill="currentColor" stroke="currentColor"><circle cx='22' cy='30' r='10'/><rect x='36' y='22' width='14' height='26' rx='4'/></svg></div>
+        <div><strong>Health & Beauty</strong><div class="small">Care & wellness</div></div>
+      </a>
+      <a class="cat" href="/categories/">
+        <div class="icon"><svg viewBox="0 0 64 64" width="28" height="28" fill="currentColor" stroke="currentColor"><circle cx='28' cy='30' r='12'/><circle cx='44' cy='38' r='8'/></svg></div>
+        <div><strong>Sports & Outdoors</strong><div class="small">Gear & fitness</div></div>
+      </a>
+    </div>
+  </section>
+
+  <section class="container section">
+    <h2>Latest Reviews</h2>
+    <div class="grid cards-3">
+      <article class="card review-card hover">
+        <img loading="lazy" src="assets/img/cover1.svg" alt="Coffee mug" decoding="async" />
+        <div class="content">
+          <h3>Best Travel Coffee Mugs of 2025</h3>
+          <p>We tested 15 mugs for heat retention and spill resistance.</p>
+          <p><a class="btn" href="/article/" style="padding:8px 12px;font-size:14px;margin-top:10px;display:inline-block">Read More</a></p>
+        </div>
+      </article>
+      <article class="card review-card hover">
+        <img loading="lazy" src="assets/img/cover2.svg" alt="Robot vacuum" decoding="async" />
+        <div class="content">
+          <h3>Top 5 Robotic Vacuums for 2025</h3>
+          <p>Our picks for quiet, powerful, pet-friendly cleaning.</p>
+          <p><a class="btn" href="/article/" style="padding:8px 12px;font-size:14px;margin-top:10px;display:inline-block">Read More</a></p>
+        </div>
+      </article>
+      <article class="card review-card hover">
+        <img loading="lazy" src="assets/img/cover3.svg" alt="Home decor" decoding="async" />
+        <div class="content">
+          <h3>Best Home Decor Items for 2025</h3>
+          <p>Budget upgrades that make your space feel premium.</p>
+          <p><a class="btn" href="/article/" style="padding:8px 12px;font-size:14px;margin-top:10px;display:inline-block">Read More</a></p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="container section">
+    <div class="subscribe">
+      <strong>Subscribe to get the latest deals</strong>
+      <div class="search" style="max-width:420px">
+        <input class="input" placeholder="Enter your email" />
+        <button class="btn">Subscribe</button>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+  <script src="/assets/js/main.js" defer></script>
+</BaseLayout>
